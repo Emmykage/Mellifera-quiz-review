@@ -1,8 +1,34 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
-  # include RackSessionsFix
+
   respond_to :json
+
+
+  def create
+      if params[:user][:email].present?
+        user = User.find_by(email: params[:user][:email])
+      end
+
+      if user.nil? && params[:user][:screen_name].present?
+        user = User.find_by(screen_name: params[:user][:screen_name])
+      end
+
+
+
+    if user&.valid_password?(params[:user][:password])
+      sign_in(user)
+      respond_with(user)
+    else
+      render json: {
+        status: {
+          code: 401,
+          message: 'Invalid screen name/email or password.'
+        }
+      }, status: :unauthorized
+    end
+  end
+
 
 
   private
@@ -23,7 +49,6 @@ class Users::SessionsController < Devise::SessionsController
   def respond_to_on_destroy
     if request.headers['Authorization'].present?
 
-      binding.b
       jwt_payload = JWT.decode(request.headers['Authorization'].split(' ')[1], Rails.application.credentials.secret_key_base).first
       current_user = User.find(jwt_payload['sub'])
     end

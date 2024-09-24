@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   }
 
   devise_scope :user do
+    get 'auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google'
+    get 'auth/twitter/callback', to: 'users/omniauth_callbacks#twitter'
+
     put 'users', to: 'users/registrations#update', as: :update_user
     get 'users', to: 'users/registrations#show', as: :get_user
   end

@@ -324,5 +324,10 @@ Devise.setup do |config|
     jwt.expiration_time = 30.minutes.to_i
     # binding.b
 
+
+  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], scope: 'userinfo.email, userinfo.profile'
+  config.omniauth :twitter, ENV['TWITTER_API_KEY'], ENV['TWITTER_API_SECRET']
+
+
   end
 end
