@@ -5,13 +5,19 @@ Rails.application.routes.draw do
   devise_for :users, path: "", path_names: {
     sign_in: "login",
     sign_out: 'logout',
-    registration: 'signup'
+    registration: 'signup',
+     edit: 'edit_user'
   },
   controllers: {
     sessions: 'users/sessions',
     registrations: 'users/registrations',
     omniauth_callbacks: 'users/omniauth_callbacks'
   }
+
+  devise_scope :user do
+    put 'users', to: 'users/registrations#update', as: :update_user
+    get 'users', to: 'users/registrations#show', as: :get_user
+  end
 
   get "up" => "rails/health#show", as: :rails_health_check
 
