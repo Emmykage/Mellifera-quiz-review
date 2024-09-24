@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
     put 'users', to: 'users/registrations#update', as: :update_user
     get 'users', to: 'users/registrations#show', as: :get_user
+    post 'users/refresh', to: 'users/sessions#refresh', as: :get_refreh
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

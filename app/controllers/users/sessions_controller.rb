@@ -17,7 +17,9 @@ class Users::SessionsController < Devise::SessionsController
 
 
     if user&.valid_password?(params[:user][:password])
-      sign_in(user)
+      # sign_in(user)
+      token = user.generate_jwt
+      refresh_token = user.generate_refresh_token
       respond_with(user)
     else
       render json: {
@@ -29,7 +31,29 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
+  def refresh
+    user = User.find_by(refresh_token: params[:user][:refresh_token])
 
+
+    # binding.b
+
+
+    if user
+      new_jwt = user.generate_jwt
+      render json: {
+        status: {
+          code: 200,
+          message: "Token refreshed successfully.",
+        },
+        token: new_jwt,
+        refresh_token: user.refresh_token
+      }, status: :ok
+    else
+      render json: {
+        error: "Invalid refresh token."
+      }, status: :unauthorized
+    end
+  end
 
   private
   def respond_with(current_user, _opts = {})

@@ -38,4 +38,13 @@ class User < ApplicationRecord
 
           end
 
+          def generate_refresh_token
+            self.refresh_token = SecureRandom.hex(10)
+            if save
+              self.refresh_token
+            else
+              errors.full_messages
+            end
+          end
+
 end
