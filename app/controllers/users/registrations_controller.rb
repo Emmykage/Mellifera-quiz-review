@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Users::RegistrationsController < Devise::RegistrationsController
   # include RackSessionsFix
   respond_to :json
@@ -23,5 +21,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
         }
       }, status: :unprocessable_entity
     end
+  end
+
+
+
+  def user_update_params
+    params.require(:user).permit(:email, :password, :password_confirmation, :current_password, :image, :screen_name)
   end
 end

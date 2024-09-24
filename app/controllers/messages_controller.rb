@@ -1,11 +1,10 @@
 class MessagesController < ApplicationController
-  before_action :set_message, only: %i[ show update destroy ]
+  # before_action :set_message, only: %i[ show update destroy ]
+  before_action :authenticate_user!
 
   # GET /messages
   def index
-
     @messages = current_user.received_messages.includes(:sender, :replies).order(created_at: :desc)
-
     render json: @messages
   end
 
@@ -16,10 +15,12 @@ class MessagesController < ApplicationController
 
   # POST /messages
   def create
-    @message = Message.new(message_params)
+    # @message = current_user.messages.new(message_params)
+    @message = current_user.messages.new(message_params.merge(sender_id: current_user.id))
+
 
     if @message.save
-      render json: @message, status: :created, location: @message
+      render json: @message, status: :created
     else
       render json: @message.errors, status: :unprocessable_entity
     end

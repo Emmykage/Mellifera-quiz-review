@@ -30,15 +30,17 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
 
 
+gem 'active_model_serializers', '~> 0.10.2'
 
+gem 'aws-sdk-s3'
 
 # set up devise
 gem 'devise'
 gem 'devise-jwt'
-gem 'jsonapi-serializer'
+# gem 'jsonapi-serializer'
 
 # set up social auth
 gem 'omniauth'
