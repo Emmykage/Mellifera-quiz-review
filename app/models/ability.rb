@@ -10,6 +10,9 @@ class Ability
       can :reply, Message, sender_id: user.id
       can :update, Message, sender_id: user.id
       can :destroy, Message, sender_id: user.id
+
+      can :update, User, id: user.id
+      can :read, User, id: user.id
     end
 
 
