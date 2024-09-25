@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     get 'auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google'
     get 'auth/twitter/callback', to: 'users/omniauth_callbacks#twitter'
 
-    patch 'users/:id', to: 'users/registrations#update', as: :update_user
+    put 'users/:id', to: 'users/registrations#update', as: :update_user
     get 'users/:id', to: 'users/registrations#show', as: :get_user
     post 'users/refresh', to: 'users/sessions#refresh', as: :get_refreh
 
