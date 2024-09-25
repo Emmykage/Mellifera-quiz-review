@@ -60,6 +60,39 @@ class MessagesController < ApplicationController
 
   end
 
+
+  def send_reply
+    message = Message.find_by(id: params[:id])
+
+    if message
+      @message = Message.new(reply_params.merge(user_id: current_user.id, parent_message_id: message.id))
+
+      if @message.save
+        render json: {
+          status: {
+            code: 200,
+            message: "Message sent successfully"
+          },
+        }, status: :ok
+      else
+        render json: {
+          status: {
+            code: 422,  # Change to 422 for unprocessable entity
+            message: "Message failed",
+            errors: @message.errors.full_messages  # Include validation errors for debugging
+          }
+        }, status: :unprocessable_entity  # Change to :unprocessable_entity for proper HTTP status
+      end
+    else
+      render json: {
+        status: {
+          code: 404,
+          message: "Message failed, no message to reply to"
+        }
+      }, status: :not_found
+    end
+  end
+
   # PATCH/PUT /messages/1
   def update
     if @message.update(message_params)
@@ -84,4 +117,7 @@ class MessagesController < ApplicationController
     def message_params
       params.require(:message).permit( :sender_id, :content)
     end
+     def reply_params
+    params.require(:message).permit( :sender_id, :content, :recipient_id)
+  end
 end

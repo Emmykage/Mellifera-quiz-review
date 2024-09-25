@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   end
 
   post 'users/:id/inbox', to: 'messages#send_message', as: :send_message
+  post 'messages/:id/reply', to: 'messages#send_reply', as: :send_reply
 
 
   get "up" => "rails/health#show", as: :rails_health_check
