@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :questions
 
   resources :messages, only: %i[index create]
 
@@ -30,6 +31,9 @@ Rails.application.routes.draw do
 
 
   get "up" => "rails/health#show", as: :rails_health_check
+
+
+  root "questions#index"
 
 
 end

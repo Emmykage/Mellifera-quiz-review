@@ -1,5 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # include RackSessionsFix
+  before_action :authenticate_user!, only: [:update]
   respond_to :json
 
 
