@@ -18,10 +18,16 @@ Rails.application.routes.draw do
     get 'auth/google_oauth2/callback', to: 'users/omniauth_callbacks#google'
     get 'auth/twitter/callback', to: 'users/omniauth_callbacks#twitter'
 
-    put 'users', to: 'users/registrations#update', as: :update_user
-    get 'users', to: 'users/registrations#show', as: :get_user
+    put 'users/:id', to: 'users/registrations#update', as: :update_user
+    get 'users/:id', to: 'users/registrations#show', as: :get_user
     post 'users/refresh', to: 'users/sessions#refresh', as: :get_refreh
+
+
+    get 'users/:id/inbox', to: 'users/registrations#inbox', as: :get_inbox
   end
+
+  post 'users/:id/inbox', to: 'messages#send_message', as: :send_message
+
 
   get "up" => "rails/health#show", as: :rails_health_check
 

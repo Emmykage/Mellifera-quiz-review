@@ -17,7 +17,7 @@ class Users::SessionsController < Devise::SessionsController
 
 
     if user&.valid_password?(params[:user][:password])
-      # sign_in(user)
+      sign_in(user)
       token = user.generate_jwt
       refresh_token = user.generate_refresh_token
       respond_with(user)

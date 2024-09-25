@@ -8,6 +8,11 @@ class MessagesController < ApplicationController
     render json: @messages
   end
 
+  def inbox
+    @messages = current_user.received_messages.includes(:sender, :replies).order(created_at: :desc)
+    render json: @messages
+  end
+
   # GET /messages/1
   def show
     render json: @message
@@ -20,10 +25,39 @@ class MessagesController < ApplicationController
 
 
     if @message.save
-      render json: @message, status: :created
+      render json: @message
     else
       render json: @message.errors, status: :unprocessable_entity
     end
+  end
+
+
+
+  def send_message
+    user = User.find(params[:id])
+
+        # @message = current_user.messages.new(message_params)
+        @message = User.messages.new(message_params.merge(sender_id: user.id, user_id: user.id))
+
+
+        if @message.save
+            render json: {
+              status: {
+                code: 200,
+                message: "message sent successfully"
+              },
+            }, status: :ok
+          else
+            render json: {
+              status: {
+                code: 404,
+                message: "message failed"
+              }
+            }, status: :not_found
+        end
+
+
+
   end
 
   # PATCH/PUT /messages/1
@@ -48,6 +82,6 @@ class MessagesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def message_params
-      params.require(:message).permit(:sender_id, :recipient_id, :content, :user_id)
+      params.require(:message).permit( :recipient_id, :content)
     end
 end

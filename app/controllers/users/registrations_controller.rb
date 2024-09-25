@@ -2,9 +2,35 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # include RackSessionsFix
   respond_to :json
 
+
+  def inbox
+    messages = Message.where(recipient: params[:id])
+
+    if messages.any?
+      render json: {
+        status: {
+          code: 200,
+          message: "Messages retrieved successfully"
+        },
+        data: messages
+      }, status: :ok
+    else
+      render json: {
+        status: {
+          code: 404,
+          message: "No messages found"
+        },
+        data: []
+      }, status: :not_found
+    end
+  end
+
+
+
 def show
 
-  user = current_user
+  # user = current_user
+  user = User.find(params[:id])
 
   if user
     render json: {
@@ -28,7 +54,7 @@ end
 
   def update
 
-    self.resource = current_user
+    self.resource = User.find(params[:id])
 
     binding.b
 
