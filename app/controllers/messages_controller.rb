@@ -37,7 +37,7 @@ class MessagesController < ApplicationController
     user = User.find(params[:id])
 
         # @message = current_user.messages.new(message_params)
-        @message = User.messages.new(message_params.merge(sender_id: user.id, user_id: user.id))
+        @message = current_user.messages.new(message_params.merge(recipient_id: params[:id]))
 
 
         if @message.save
@@ -82,6 +82,6 @@ class MessagesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def message_params
-      params.require(:message).permit( :recipient_id, :content)
+      params.require(:message).permit( :sender_id, :content)
     end
 end
