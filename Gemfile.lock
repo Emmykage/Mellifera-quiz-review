@@ -139,6 +139,7 @@ GEM
     faraday-net_http (3.3.0)
       net-http
     ffi (1.17.0-x64-mingw-ucrt)
+    ffi (1.17.0-x86_64-linux-gnu)
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashie (5.0.0)
@@ -187,6 +188,8 @@ GEM
     nio4r (2.7.3)
     nokogiri (1.16.7-x64-mingw-ucrt)
       racc (~> 1.4)
+    nokogiri (1.16.7-x86_64-linux)
+      racc (~> 1.4)
     oauth (1.1.0)
       oauth-tty (~> 1.0, >= 1.0.1)
       snaky_hash (~> 2.0)
@@ -220,6 +223,7 @@ GEM
       omniauth-oauth (~> 1.1)
       rack
     orm_adapter (0.5.0)
+    pg (1.5.8)
     pg (1.5.8-x64-mingw-ucrt)
     psych (5.1.2)
       stringio
@@ -306,6 +310,7 @@ GEM
 
 PLATFORMS
   x64-mingw-ucrt
+  x86_64-linux
 
 DEPENDENCIES
   active_model_serializers (~> 0.10.2)
