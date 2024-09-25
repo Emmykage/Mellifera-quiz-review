@@ -3,7 +3,7 @@ require "active_support/core_ext/integer/time"
 
 
 Rails.application.routes.default_url_options = {
-  host: "http://localhost:3000"
+  host: "https://mellifera-quiz-review-38fe23334e2d.herokuapp.com"
 }
 
 Rails.application.configure do
