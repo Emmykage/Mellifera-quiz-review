@@ -56,8 +56,6 @@ end
 
     self.resource = User.find(params[:id])
 
-    binding.b
-
     if resource.update(user_update_params)
 
       resource.image.attach(params[:user][:image]) if params[:user][:image].present?
